@@ -18,22 +18,18 @@ class _HomePageState extends State<HomePage> {
   late double euro;
   late double rmb;
 
-  void _clearAll(
-      TextEditingController currency, c2, c3, c4, double d2, d3, d4) {
-    double standard = 100;
-    //   currency.text = standard.toString();
-    //   c2.text = (standard * standard / d2).toStringAsFixed(2);
-    //   c3.text = (standard* standard  / d3).toStringAsFixed(2);
-    //   c4.text = (standard * standard / d4).toStringAsFixed(2);
- // TODO: make clear the fields change to standard 100$ and update the other fields
-
+  void _realStandard(TextEditingController currency) {
+    currency.text = "100";
+    String newCurrency = currency.text;
+    double real = double.parse(newCurrency);
+    dollarController.text = (real / dollar).toStringAsFixed(2);
+    eurosController.text = (real / euro).toStringAsFixed(2);
+    yuanController.text = (real / rmb).toStringAsFixed(2);
   }
 
   void _realChanged(String text) {
     if (text.isEmpty) {
-      _clearAll(realController, dollarController, eurosController,
-          yuanController, dollar, euro, rmb);
-      return;
+      _realStandard(realController);
     }
     double real = double.parse(text);
     dollarController.text = (real / dollar).toStringAsFixed(2);
@@ -41,13 +37,18 @@ class _HomePageState extends State<HomePage> {
     yuanController.text = (real / rmb).toStringAsFixed(2);
   }
 
+  void _dollarStandard(TextEditingController currency) {
+    currency.text = "100";
+    String newCurrency = currency.text;
+    double dollar = double.parse(newCurrency);
+    realController.text = (dollar * this.dollar).toStringAsFixed(2);
+    eurosController.text = (dollar * this.dollar / euro).toStringAsFixed(2);
+    yuanController.text = (dollar * this.dollar / rmb).toStringAsFixed(2);
+  }
+
   void _dollarChanged(String text) {
     if (text.isEmpty) {
-      _clearAll(dollarController,  eurosController,yuanController,realController, this.dollar, euro, rmb);
-      double dollar = double.parse(text);
-      realController.text = (dollar * this.dollar).toStringAsFixed(2);
-      eurosController.text = (dollar * this.dollar / euro).toStringAsFixed(2);
-      yuanController.text = (dollar * this.dollar / rmb).toStringAsFixed(2);
+      _dollarStandard(dollarController);
     }
     double dollar = double.parse(text);
     realController.text = (dollar * this.dollar).toStringAsFixed(2);
@@ -55,13 +56,18 @@ class _HomePageState extends State<HomePage> {
     yuanController.text = (dollar * this.dollar / rmb).toStringAsFixed(2);
   }
 
+  void _euroStandard(TextEditingController currency) {
+    currency.text = "100";
+    String newCurrency = currency.text;
+    double euro = double.parse(newCurrency);
+    realController.text = (euro * this.euro).toStringAsFixed(2);
+    dollarController.text = (euro * this.euro / dollar).toStringAsFixed(2);
+    yuanController.text = (euro * this.euro / rmb).toStringAsFixed(2);
+  }
+
   void _eurosChanged(String text) {
     if (text.isEmpty) {
-      // _clearAll(eurosController, yuanController,realController, dollarController,  this.euro,rmb,dollar);
-      double euro = double.parse(text);
-      realController.text = (euro * this.euro).toStringAsFixed(2);
-      dollarController.text = (euro * this.euro / dollar).toStringAsFixed(2);
-      yuanController.text = (euro * this.euro / rmb).toStringAsFixed(2);
+      _euroStandard(eurosController);
     }
     double euro = double.parse(text);
     realController.text = (euro * this.euro).toStringAsFixed(2);
@@ -69,13 +75,18 @@ class _HomePageState extends State<HomePage> {
     yuanController.text = (euro * this.euro / rmb).toStringAsFixed(2);
   }
 
+  void _yuanStandard(TextEditingController currency) {
+    currency.text = "100";
+    String newCurrency = currency.text;
+    double rmb = double.parse(newCurrency);
+    realController.text = (rmb * this.rmb).toStringAsFixed(2);
+    dollarController.text = (rmb * this.rmb / dollar).toStringAsFixed(2);
+    eurosController.text = (rmb * this.rmb / euro).toStringAsFixed(2);
+  }
+
   void _yuanChanged(String text) {
     if (text.isEmpty) {
-      // _clearAll(yuanController, realController,dollarController,eurosController, this.rmb, dollar,euro);
-      double rmb = double.parse(text);
-      realController.text = (rmb * this.rmb).toStringAsFixed(2);
-      dollarController.text = (rmb * this.rmb / dollar).toStringAsFixed(2);
-      eurosController.text = (rmb * this.rmb / euro).toStringAsFixed(2);
+      _yuanStandard(yuanController);
     }
 
     double rmb = double.parse(text);
